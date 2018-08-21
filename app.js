@@ -58,6 +58,10 @@ function Colors() {
   this.green = 'rgba(0, 230, 0, 1)';
   this.blue = 'rgba(0, 0, 230, 1)';
   this.electricBlue = 'rgba(20, 30, 230, 1)';
+  this.c0 = 'rgba(227, 225, 227, 1)';
+  this.c1 = 'rgba(102, 101, 100, 1)';
+  this.c2 = 'rgba(52, 50, 57, 1)';
+  this.c3 = 'rgba(240, 61, 51, 1)';
 }
 
 function Game(updateDur) {
@@ -98,7 +102,9 @@ function Game(updateDur) {
       console.log('click not in bounds');
     } else {
       let foundBox = this.sandbox.boxes[row][col];
-      foundBox.color = randColor('rgba');
+      foundBox.addVal();
+      // foundBox.color = randColor('rgba');
+
     }
   };
 
@@ -231,11 +237,12 @@ function gameLoop(timestamp) {
   if ( (State.loopRunning === true) && (State.gameStarted === true) ) { myGame.update(); }
 
   clearCanvas();
-  if (State.gameStarted === false) {
-    myGame.drawBG();
-  } else {
-    myGame.draw();
-  }
+  // if (State.gameStarted === false) {
+  //   myGame.drawBG();
+  // } else {
+  //   myGame.draw();
+  // }
+  myGame.draw();
 
 }
 

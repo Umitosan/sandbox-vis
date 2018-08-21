@@ -7,10 +7,6 @@ function Sandbox(size) {
   this.rows = 28;
   this.cols = 38;
   this.doneSorting = false;
-  this.c0 = 'rgba(227, 225, 227, 1)';
-  this.c1 = 'rgba(102, 101, 100, 1)';
-  this.c2 = 'rgba(52, 50, 57, 1)';
-  this.c3 = 'rgba(240, 61, 51, 1)';
 
   this.init = function() {
     this.boxes = [];
@@ -57,6 +53,22 @@ function Cell(xx,yy,s) {
   this.init = function() {
     this.val = 0;
     this.color = myColors.lightGreyBox;
+  };
+
+  this.addVal = function() {
+    this.val += 1;
+    let v = this.val;
+    if (v === 0) {
+      this.color = myColors.c0;
+    } else if (v === 1) {
+      this.color = myColors.c1;
+    } else if (v === 2) {
+      this.color = myColors.c2;
+    } else if (v === 3) {
+      this.color = myColors.c3;
+    } else {
+      console.log('changeVal probs or num too high');
+    }
   };
 
   this.draw = function() {
