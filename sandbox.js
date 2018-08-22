@@ -3,9 +3,9 @@
 
 function Sandbox(size) {
   this.boxes = undefined;
-  this.boxSize = 20;
-  this.rows = 28;
-  this.cols = 38;
+  this.boxSize = 10;
+  this.rows = 60;
+  this.cols = 80;
   this.updatesFinished = false;
 
   this.init = function() {
@@ -13,30 +13,14 @@ function Sandbox(size) {
     for (let i = 0; i < this.rows; i++) {
       let newRow = [];
       for (let j = 0; j < this.cols; j++) {
-        let x = this.boxSize+(j*this.boxSize);
-        let y = this.boxSize+(i*this.boxSize);
+        let x = (j*this.boxSize);
+        let y = (i*this.boxSize);
         let c = new Cell(x,y,this.boxSize);
         c.init();
         newRow.push(c);
       }
       this.boxes.push(newRow);
     }
-  };
-
-  this.getCell = function(dir) {
-    let foundCell;
-    if (dir === 'up') {
-
-    } else if (dir === 'down') {
-
-    } else if (dir === 'left') {
-
-    } else if (dir === 'right') {
-
-    } else {
-      console.log('not a valid getCell dir');
-    }
-    return foundCell;
   };
 
   this.draw = function() {
@@ -61,52 +45,49 @@ function Sandbox(size) {
           } // for
 
           // build the val changes for 1 pass
-          for (let r = 0; r < this.boxes.length; r++) {
-            let curRow = this.boxes[r];
-            for (let c = 0; c < curRow.length; c++) {
+          for (let r = 0; r < this.rows-1; r++) {
+            for (let c = 0; c < this.cols-1; c++) {
               let curCell = this.boxes[r][c];
-              if (curCell.val === 4) { // check if cell has max value
-                // update cell vals in 4 directions
-                if (r !== 0) {   // up
-                  newBoxesVals[r-1][c]++;
-                  cellCountToUpdate++;
-                }
-                if (r !== this.boxes.length) {  // Down
-                  newBoxesVals[r+1][c]++;
-                  cellCountToUpdate++;
-                }
-                if (c !== 0) {  //left
-                  newBoxesVals[r][c-1]++;
-                  cellCountToUpdate++;
-                }
-                if (c !== curRow.length) {  // right
-                  newBoxesVals[r][c+1]++;
-                  cellCountToUpdate++;
-                }
-                // update cell of origin
-                newBoxesVals[r][c] = 1;
+              if (curCell.val >= 4) { // check if cell has max value
+                    // update cell vals in 4 directions
+                    if (r !== 0) {   // up
+                      newBoxesVals[r-1][c] += 1;
+                    }
+                    if (r !== this.rows) {  // Down
+                      newBoxesVals[r+1][c] += 1;
+                    }
+                    if (c !== 0) {  //left
+                      newBoxesVals[r][c-1] += 1;
+                    }
+                    if (c !== this.cols) {  // right
+                      newBoxesVals[r][c+1] += 1;
+                    }
+                    cellCountToUpdate++;
               }
             } // for
           } // for
 
-          // console.dir(newBoxesVals);
-
           // add newBoxesVals to this.boxes
           for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
-              // let sum = this.boxes[r][c].val + newBoxesVals[r][c];
-              this.boxes[r][c].val = newBoxesVals[r][c];
+              // first must subtract -4 from all cells that previously had 4 or more val
+              if (this.boxes[r][c].val >= 4) { this.boxes[r][c].val -= 4; }
+              // only now is it save to add from the computed array
+              this.boxes[r][c].val += newBoxesVals[r][c];
+            }
+          }
+
+          // update all colors with new vals
+          for (let r = 0; r < this.rows; r++) {
+            for (let c = 0; c < this.cols; c++) {
               this.boxes[r][c].updateColor();
             }
           }
 
-          // console.dir(this.boxes);
-
-          if (cellCountToUpdate === 0) {
-            console.log('Board update complete');
-            this.updatesFinished = true;
-          }
-          console.log('1 pass of cells update complete');
+          // if (cellCountToUpdate === 0) {
+          //   console.log('Board update complete');
+          //   this.updatesFinished = true;
+          // }
     }
   };
 
@@ -122,31 +103,32 @@ function Cell(xx,yy,s) {
 
   this.init = function() {
     this.val = 0;
-    this.color = myColors.lightGreyBox;
+    this.color = myColors.c0;
   };
 
   this.addClickVal = function() {
-    // if (this.val < 3) { this.val += 1; }
-    this.val = 4;
+    // if (this.val < 4) { this.val += 1; }
+    this.val += 100;
+    // this.val = 4;
     this.updateColor();
   };
 
   this.updateColor = function() {
     let v = this.val;
-    if (v === 0) {
-      this.color = myColors.c0;
-    } else if (v === 1) {
-      this.color = myColors.c1;
-    } else if (v === 2) {
-      this.color = myColors.c2;
-    } else if (v === 3) {
-      this.color = myColors.c3;
-    } else if (v === 4) {
-      this.color = myColors.c4;
-    } else {
-      console.log('changeVal probs or num too high');
+    switch (v) {
+      case 0: this.color = myColors.c0; break;
+      case 1: this.color = myColors.c1; break;
+      case 2: this.color = myColors.c2; break;
+      case 3: this.color = myColors.c3; break;
+      case 4: this.color = myColors.c4; break;
+      case 5: this.color = myColors.c5; break;
+      case 6: this.color = myColors.c6; break;
+      case 7: this.color = myColors.c7; break;
+      case 8: this.color = myColors.c8; break;
+      case 9: this.color = myColors.c9; break;
+      default: this.color = myColors.c9; break; // same as case 9
     }
-  };
+  }; // updateCol
 
   this.draw = function() {
     ctx.beginPath();
@@ -154,7 +136,7 @@ function Cell(xx,yy,s) {
     ctx.fillStyle = this.color;
     ctx.strokeStyle = myColors.darkGrey;
     ctx.fill();
-    ctx.stroke();
+    // ctx.stroke();
   };
 
   this.update = function() {

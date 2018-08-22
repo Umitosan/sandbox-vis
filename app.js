@@ -58,11 +58,24 @@ function Colors() {
   this.green = 'rgba(0, 230, 0, 1)';
   this.blue = 'rgba(0, 0, 230, 1)';
   this.electricBlue = 'rgba(20, 30, 230, 1)';
-  this.c0 = 'rgba(227, 225, 227, 1)';
-  this.c1 = 'rgba(102, 101, 100, 1)';
-  this.c2 = 'rgba(52, 50, 57, 1)';
-  this.c3 = 'rgba(154, 74, 51, 1)';
-  this.c4 = 'rgba(240, 61, 51, 1)';
+
+  // old colors
+  // this.c0 = 'rgba(227, 225, 227, 1)';
+  // this.c1 = 'rgba(102, 101, 100, 1)';
+  // this.c2 = 'rgba(52, 50, 57, 1)';
+  // this.c3 = 'rgba(154, 74, 51, 1)';
+  // this.c4 = 'rgba(240, 61, 51, 1)';
+
+  this.c9 = 'rgba(50, 30, 30, 1)';
+  this.c8 = 'rgba(60, 30, 30, 1)';
+  this.c7 = 'rgba(80, 30, 30, 1)';
+  this.c6 = 'rgba(100, 30, 30, 1)';
+  this.c5 = 'rgba(120, 30, 30, 1)';
+  this.c4 = 'rgba(140, 30, 30, 1)';
+  this.c3 = 'rgba(160, 30, 30, 1)';
+  this.c2 = 'rgba(180, 30, 30, 1)';
+  this.c1 = 'rgba(200, 30, 30, 1)';
+  this.c0 = 'rgba(30, 30, 140, 1)';
 }
 
 function Game(updateDur) {
@@ -273,7 +286,7 @@ $(document).ready(function() {
 
   // this is to correct for canvas blurryness on single pixel wide lines etc
   // important when animating to reduce rendering artifacts and other oddities
-  // ctx.translate(0.5, 0.5);
+  ctx.translate(0.5, 0.5);
 
   // start things up!
   myGame = new Game(State.simSpeed); // ms per update()
