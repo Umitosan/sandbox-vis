@@ -61,7 +61,8 @@ function Colors() {
   this.c0 = 'rgba(227, 225, 227, 1)';
   this.c1 = 'rgba(102, 101, 100, 1)';
   this.c2 = 'rgba(52, 50, 57, 1)';
-  this.c3 = 'rgba(240, 61, 51, 1)';
+  this.c3 = 'rgba(154, 74, 51, 1)';
+  this.c4 = 'rgba(240, 61, 51, 1)';
 }
 
 function Game(updateDur) {
@@ -102,9 +103,7 @@ function Game(updateDur) {
       console.log('click not in bounds');
     } else {
       let foundBox = this.sandbox.boxes[row][col];
-      foundBox.addVal();
-      // foundBox.color = randColor('rgba');
-
+      foundBox.addClickVal();
     }
   };
 
@@ -118,7 +117,7 @@ function Game(updateDur) {
   }; // end draw
 
   this.update = function() {
-      if (this.paused === false) { // performance based update: myGame.update() runs every myGame.updateDuration milliseconds
+      if ((this.paused === false) && (this.mode === "sim")) { // performance based update: myGame.update() runs every myGame.updateDuration milliseconds
             this.timeGap = performance.now() - this.lastUpdate;
 
             if ( this.timeGap >= this.updateDuration ) { // this update is restricted to updateDuration
@@ -129,7 +128,6 @@ function Game(updateDur) {
                 // }
                 // general update area
                 this.sandbox.update();
-                // this.boxy.update();
               }
               this.lastUpdate = performance.now();
             } // end if
