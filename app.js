@@ -66,16 +66,16 @@ function Colors() {
   // this.c3 = 'rgba(154, 74, 51, 1)';
   // this.c4 = 'rgba(240, 61, 51, 1)';
 
-  this.c9 = 'rgba(50, 30, 30, 1)';
-  this.c8 = 'rgba(60, 30, 30, 1)';
-  this.c7 = 'rgba(80, 30, 30, 1)';
-  this.c6 = 'rgba(100, 30, 30, 1)';
-  this.c5 = 'rgba(120, 30, 30, 1)';
-  this.c4 = 'rgba(140, 30, 30, 1)';
-  this.c3 = 'rgba(160, 30, 30, 1)';
-  this.c2 = 'rgba(180, 30, 30, 1)';
-  this.c1 = 'rgba(200, 30, 30, 1)';
-  this.c0 = 'rgba(30, 30, 140, 1)';
+  this.c9 = 'rgb(23, 190, 206)';
+  this.c8 = 'rgb(188, 189, 34)';
+  this.c7 = 'rgb(156, 117, 95)';
+  this.c6 = 'rgb(237, 201, 73))';
+  this.c5 = 'rgb(175, 122, 161)';
+  this.c4 = 'rgb(89, 161, 78)';
+  this.c3 = 'rgb(89, 161, 78)';
+  this.c2 = 'rgb(118, 183, 178)';
+  this.c1 = 'rgb(242, 142, 43)';
+  this.c0 = 'rgb(78, 121, 167)';
 }
 
 function Game(updateDur) {
@@ -108,10 +108,10 @@ function Game(updateDur) {
     let x = State.mouseX;
     let y = State.mouseY;
     let size = this.sandbox.boxSize;
-    console.log('click x: '+x+" y: "+y);
-    let row = Math.floor( (y-size)/size );
-    let col = Math.floor( (x-size)/size );
-    console.log('row:'+row+" col:"+col);
+    // console.log('click x: '+x+" y: "+y);
+    let row = Math.floor( y/size );
+    let col = Math.floor( x/size );
+    // console.log('row:'+row+" col:"+col);
     if ( (row < 0) || (col < 0) || (row > this.sandbox.rows - 1) || (col > this.sandbox.cols - 1) ) {
       console.log('click not in bounds');
     } else {
@@ -218,7 +218,7 @@ function keyDown(event) {
 //////////////////////////////////////////////////////////////////////////////////
 function mDown(evt) {
     if (evt.button === 0) {  // left-click
-      console.log('MOUSE: left down');
+      // console.log('MOUSE: left down');
       if (myGame.mode === 'draw') { myGame.boxClicked(); }
       if (State.mouseRightDown === false) { State.mouseLeftDown = true; } // only allow one mouse button down at a time, ignore change if both are down
     } else if (evt.button === 2) { // right-click
@@ -271,11 +271,11 @@ $(document).ready(function() {
   CANVAS.addEventListener("keydown",keyDown);
   // CANVAS.addEventListener("mousedown", mDown, false);
   $('body').on("mousedown", '#canvas', function (e) { mDown(e); return false; });
-  CANVAS.addEventListener("mouseup", mUp, false);
+  $('body').on("mouseup", '#canvas', function (e) { mUp(e); return false; });
   $('body').on('contextmenu', '#canvas', function(e){ return false; }); // prevent right click context menu default action
   CANVAS.addEventListener('mousemove', function(evt) {
       let rect = CANVAS.getBoundingClientRect();
-      State.mouseX = evt.clientX - rect.left + -0.5;
+      State.mouseX = evt.clientX - rect.left;
       State.mouseY = evt.clientY - rect.top;
       $("#coords-x").text(State.mouseX);
       $("#coords-y").text(State.mouseY);
@@ -286,7 +286,7 @@ $(document).ready(function() {
 
   // this is to correct for canvas blurryness on single pixel wide lines etc
   // important when animating to reduce rendering artifacts and other oddities
-  ctx.translate(0.5, 0.5);
+  // ctx.translate(0.5, 0.5);
 
   // start things up!
   myGame = new Game(State.simSpeed); // ms per update()

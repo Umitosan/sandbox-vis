@@ -3,9 +3,9 @@
 
 function Sandbox(size) {
   this.boxes = undefined;
-  this.boxSize = 10;
-  this.rows = 60;
-  this.cols = 80;
+  this.boxSize = 5;
+  this.rows = 120;
+  this.cols = 160;
   this.updatesFinished = false;
 
   this.init = function() {
@@ -108,7 +108,7 @@ function Cell(xx,yy,s) {
 
   this.addClickVal = function() {
     // if (this.val < 4) { this.val += 1; }
-    this.val += 100;
+    this.val += 200;
     // this.val = 4;
     this.updateColor();
   };
@@ -134,7 +134,7 @@ function Cell(xx,yy,s) {
     ctx.beginPath();
     ctx.rect(this.x,this.y,this.size,this.size);
     ctx.fillStyle = this.color;
-    ctx.strokeStyle = myColors.darkGrey;
+    // ctx.strokeStyle = myColors.darkGrey;
     ctx.fill();
     // ctx.stroke();
   };
