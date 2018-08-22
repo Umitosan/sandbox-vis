@@ -208,7 +208,7 @@ function keyDown(event) {
 function mDown(evt) {
     if (evt.button === 0) {  // left-click
       console.log('MOUSE: left down');
-      myGame.boxClicked();
+      if (myGame.mode === 'draw') { myGame.boxClicked(); }
       if (State.mouseRightDown === false) { State.mouseLeftDown = true; } // only allow one mouse button down at a time, ignore change if both are down
     } else if (evt.button === 2) { // right-click
       // console.log('MOUSE: right down');
@@ -253,13 +253,14 @@ $(document).ready(function() {
     console.log('test works');
   }
 
-  CANVAS =  $('#canvas')[0];
+  CANVAS = $('#canvas')[0];
   ctx =  CANVAS.getContext('2d');
   canH = CANVAS.height;
   canW = CANVAS.width;
   CANVAS.addEventListener("keydown",keyDown);
-  CANVAS.addEventListener("mousedown", mDown);
-  CANVAS.addEventListener("mouseup", mUp);
+  // CANVAS.addEventListener("mousedown", mDown, false);
+  $('body').on("mousedown", '#canvas', function (e) { mDown(e); return false; });
+  CANVAS.addEventListener("mouseup", mUp, false);
   $('body').on('contextmenu', '#canvas', function(e){ return false; }); // prevent right click context menu default action
   CANVAS.addEventListener('mousemove', function(evt) {
       let rect = CANVAS.getBoundingClientRect();
